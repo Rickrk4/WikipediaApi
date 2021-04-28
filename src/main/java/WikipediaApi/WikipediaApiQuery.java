@@ -34,6 +34,23 @@ public class WikipediaApiQuery {
         this.addValue2Key("titles", title.replace(' ','+'),"|");
         return this;
     }
+    public WikipediaApiQuery allowRedirect(){
+        this.addValue2Key("redirects","1","|");
+        return this;
+    }
+
+    /**
+     *
+     * @param url
+     * @return encoded url
+     *
+     * The api use the "|" char that cause a bad formed uri.
+     * Other encoder like URLEncoder.encode replace another character that should remain in uri, which
+     * cause another bad formed uri.
+     */
+    public static String encoder(String url){
+        return url.replace("|", "%7C");
+    }
 
     public String get(){
         Set<String> keys = this.propMap.keySet();
@@ -41,6 +58,6 @@ public class WikipediaApiQuery {
         for (String key : keys ) {
             result += key+"="+this.propMap.get(key)+"&";
         }
-        return result;
+        return encoder(result);
     }
 }
