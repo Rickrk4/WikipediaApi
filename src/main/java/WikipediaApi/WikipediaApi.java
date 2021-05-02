@@ -86,8 +86,9 @@ public class WikipediaApi {
     }
 
 
-    public JSONObject makeQuery(WikipediaApiQuery query) throws IOException {
-        return this.makeQuery(query.get());
+    public WikipediaApiResponse makeQuery(WikipediaApiQuery query) throws IOException, URISyntaxException, InterruptedException {
+        return makeQuery(makeUri(query.get()));
+        //return this.makeQuery(query.get());
     }
 
 
@@ -99,6 +100,14 @@ public class WikipediaApi {
 
     private URI makeUri(String args) throws URISyntaxException {
         return new URI(api + "?" + actionQuery + '&' + args);
+    }
+
+    public WikipediaApiResponse makeQuery(URI uri) throws IOException, InterruptedException {
+        var client = HttpClient.newHttpClient();
+        var request = HttpRequest.newBuilder(uri).header("Accept","application/json").build();
+        var response = client.send(request, new JsonBodyHandler<JSONObject>(JSONObject.class));
+        WikipediaApiResponse wikipediaApiResponse = new WikipediaApiResponse(response);
+        return  wikipediaApiResponse;
     }
 
     public JSONObject makeQuery(URL url) throws IOException {
