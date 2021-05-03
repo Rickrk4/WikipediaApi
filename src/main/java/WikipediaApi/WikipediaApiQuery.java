@@ -49,7 +49,7 @@ public class WikipediaApiQuery {
      * cause another bad formed uri.
      */
     public static String encoder(String url){
-        return url.replace("|", "%7C");
+        return url.replace("|", "%7C").replace("<","%3C").replace(">","%3E");
     }
 
     public String get(){

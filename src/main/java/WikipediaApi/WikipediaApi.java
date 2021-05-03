@@ -33,15 +33,24 @@ public class WikipediaApi {
             this.pages = null;
         }
 
-        public JSONObject getPage() {
+        public JSONObject getPage(){
             if (this.pages == null) {
-                this.pages = this.response.body().get().getJSONObject("query").getJSONObject("pages");
+                try {
+                    this.pages = this.response.body().get().getJSONObject("query").getJSONObject("pages");
+                    String firstPage = pages.keys().next();
+                    if (firstPage.equals("-1")){
+                        return null;
+                    }
+                    return pages.getJSONObject(firstPage);
+                } catch (org.json.JSONException e){
+                    return null;
+                }
             }
-            String firstPage = pages.keys().next();
-            if (firstPage.equals("-1")){
-                return null;
-            }
-            return pages.getJSONObject(firstPage);
+            return null;
+        }
+
+        public HttpResponse<Supplier<JSONObject>> getResponse(){
+            return this.response;
         }
 
 
