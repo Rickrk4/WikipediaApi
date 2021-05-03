@@ -1,12 +1,19 @@
 # Wikipedia API
 ## Import
 ### Maven
-Per importare con maven aggiungere questa dipendenza al file pom.xml.
+Per importare con maven aggiungere il repository e la dipendenza al file pom.xml.
 ```
+    <repositories>
+        <repository>
+            <id>WikipediaApi</id>
+            <url>https://github.com/Rickrk4/WikipediaApi/blob/mvn-repo/</url>
+        </repository>
+    </repositories>
+
 <dependency>
-<groupId>org.example</groupId>
-<artifactId>WikipediaApi</artifactId>
-<version>0.1.0</version>
+    <groupId>org.example</groupId>
+    <artifactId>WikipediaApi</artifactId>
+    <version>0.1.0</version>
 </dependency>
 ```
 In alternativa è possibile importare direttamente il file jar a questo link:
